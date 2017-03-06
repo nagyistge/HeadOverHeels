@@ -27,7 +27,14 @@ CreateLanguageMenu::CreateLanguageMenu( BITMAP* picture )
         // Lee el idioma establecido en la configuración
         ConfigurationManager configurationManager( isomot::homePath() + "configuration.xml" );
         configurationManager.read();
+
         language = configurationManager.getLanguage();
+        if ( language.compare( "en_UK" ) == 0 )
+        { // for backwards compatibility
+                language = "en_US";
+        }
+
+        fprintf( stdout, "\"%s\" is the chosen language\n", language .c_str() );
 }
 
 CreateLanguageMenu::~CreateLanguageMenu( )
@@ -78,7 +85,6 @@ void CreateLanguageMenu::doIt ()
         screen->addWidget( menu );
         screen->setNext( menu );
 
-        // Cambia la pantalla mostrada en la interfaz
         GuiManager::getInstance()->changeScreen( screen );
 }
 
